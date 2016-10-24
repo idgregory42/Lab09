@@ -35,15 +35,16 @@ T** Sort<T>::quickSort(T** items, int numItems, int (*compare) (T* one, T* two))
    //DO THIS
    //create a new array that will be sorted and returned
    //this is in case the original, unsorted array is also needed
+	T** quick_array = new T*[numItems];
+	
+	for (int i = 0; i < numItems; i++)
+	{
+		quick_array[i] = items[i];
+	}
 
-
-
-
-
-
-
-
-
+	_quickSort(quick_array, 0, numItems - 1, compare);
+	
+	return quick_array;
 
 }
 
@@ -56,16 +57,10 @@ void Sort<T>::_quickSort(T** items, int first, int last, int (*compare) (T* one,
    //make the necessary partition and recursive calls for quick sort
    if (first < last)
    {
-
-
-
-
-
-
-
-
-
-
+		pivotIndex = partition(items, first, last, compare); //find the pivot position
+		
+		_quickSort(items, first, pivotIndex - 1, compare);   //quick sort left subarray
+		_quickSort(items, pivotIndex + 1, last, compare);	 //quick sort right subarray
 
    }  
 }  
@@ -80,25 +75,33 @@ int Sort<T>::partition(T** items, int first, int last, int (*compare) (T* one, T
    T* temp; 
 
    //initially, choosePivot does nothing           
-   choosePivot(items, first, last); 
+   choosePivot(items, first, last);		//finds pivot and swaps the item at the pivot with first and item at first with the mid
+	
+	int piv = first;         	//the pivot index
+	int _last = first;			//the _last index
+	int curr_ndx = first + 1;   //the current index
+	
+	//goes through until the last index has been dealt with
+	while(curr_ndx <= last)
+	{
+		int comp = (*compare) (items[curr_ndx], items[piv]);  //compares the current item with the pivot item
+		
+		//
+		if(comp < 0)
+		{
+			_last++;							//increment last index
+			temp = items[curr_ndx];				//temp holds item at current index
+			items[curr_ndx] = items[_last];		//item at current index is the item at last index
+			items[_last] = temp;				//item at last index is the item at current index
+		}
+		curr_ndx++;								//increment the current index
+	}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-     
-
+	temp = items[piv];				//temp is the item at pivot index
+	items[piv] = items[_last];		//item at pivot index is the item at last index
+	items[_last] = temp;			//item at last index is the item at pivot index
+	
+	return _last;					//returns index the pivot is in
 }
 
 template < class T >
@@ -107,13 +110,10 @@ void Sort<T>::choosePivot(T** items, int first, int last)
    //DO THIS
    //find a better item to be the partition than simply using the item in the first index
    //you will need to swap
-
-
-
-
-
-
-
+	int mid_ndx = ((first + (last - first)) / 2);  //calculates median
+	T* temp_item = items[mid_ndx];                 //copies item to temp holder
+	items[mid_ndx] = items[first];				   //middle of the array is the first item
+	items[first] = temp_array;					   //first items in array is the median
 }
 
 //no work below this point
