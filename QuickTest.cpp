@@ -1,9 +1,9 @@
 #include "Sort.h"
-#include "ListArray.h"
+#include "CSC2110/ListArray.h"
 using CSC2110::ListArray;
-#include "ListArrayIterator.h"
+#include "CSC2110/ListArrayIterator.h"
 using CSC2110::ListArrayIterator;
-#include "CD.h"
+#include "CSC2110/CD.h"
 using CSC2110::CD;
 
 void deleteCDs(ListArray<CD>* list)
